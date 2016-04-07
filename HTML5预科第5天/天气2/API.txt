@@ -1,0 +1,7 @@
+http://api.map.baidu.com/telematics/v3/weather?location=郑州市&output=json&ak=EGmbw3jQF3ZccEqiv5hxKekm&mcode=com.BaiduWeather&callback=?
+
+
+
+
+
+℃

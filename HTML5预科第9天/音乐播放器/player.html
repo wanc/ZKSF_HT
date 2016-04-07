@@ -1,0 +1,306 @@
+<html>
+    <head>
+        <title>播放器</title>
+        <meta charset="utf-8">
+        <style>
+            @font-face {
+                font-family: "Glyphicons Halflings";
+                src: url("fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("fonts/glyphicons-halflings-regular.woff") format("woff"), url("fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
+            }
+            .glyphicon {
+                position: relative;
+                top: 1px;
+                display: inline-block;
+                font-family: "Glyphicons Halflings";
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            .glyphicon-backward:before {
+                content:"\e071"
+            }
+            .glyphicon-play:before {
+                content:"\e072"
+            }
+            .glyphicon-pause:before {
+                content:"\e073"
+            }
+            .glyphicon-stop:before {
+                content:"\e074"
+            }
+            .glyphicon-forward:before {
+                content:"\e075"
+            }
+            .glyphicon-volume-off:before {
+                content:"\e036"
+            }
+            .glyphicon-volume-down:before {
+                content:"\e037"
+            }
+            .glyphicon-volume-up:before {
+                content:"\e038"
+            }
+            body{
+                background-color: #333;
+                cursor: default;
+            }
+            main{
+                margin: 100px auto;
+                box-shadow: 2px 4px 8px #111;
+                border-radius: 11px;
+                width: 300px;
+                height: 300px;
+                background-image: url(wf.png);
+                background-size: 300px;
+                background-repeat: no-repeat;
+                animation-duration: 0.5s;
+            }
+            @keyframes slideBg {
+                0%{
+                    background-position: 300px 0px;
+                }
+                100%{
+                    background-position: 0px 0px;
+                }
+            }
+            header{
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                height: 96px;
+                background-color: rgb(22,22,22);
+                box-sizing: border-box;
+                opacity: 0.95;
+            }
+            
+            progress{
+                box-sizing: border-box;
+                opacity: 0.95;
+                border: none;
+                height: 4px;
+                padding: 0;
+                margin: 0;
+                width: 300px;
+                background: #111;
+            }
+            ::-webkit-progress-bar{
+                background-color: rgb(200,87,88);
+            }
+            ::-moz-progress-bar{
+                background-color: rgb(200,87,88);
+            }
+            footer{
+                height:200px;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+                background-color: rgb(106,35,42);
+                box-sizing: border-box;
+                opacity: 0.95;
+            }
+            h1{
+                text-align: center;
+                margin: 0;
+                padding-top: 15px;
+                color: rgb(174,164,154);
+                font-weight: normal;
+                font-size: 30px;
+            }
+            h2{
+                text-align: center;
+                margin: 0;
+                color: rgb(174,164,154);
+                font-weight: normal;
+                font-size: 15px;
+            }
+            time{
+                color: rgb(134,124,114);
+                text-align: center;
+                display: block;
+                margin: 0px auto;
+                padding: 24px;
+                font-size: 32px;
+                font-weight: 100;
+                font-family: '华文黑体';
+            }
+            ul,li{
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+            li:nth-child(1){
+                width: 45px;
+                height: 45px;
+                background-image: url(buttons/prev.png);
+            }
+            li:nth-child(2){
+                width: 45px;
+                height: 45px;
+                background-image: url(buttons/start.png);
+            }
+            li:nth-child(3){
+                width: 45px;
+                height: 45px;
+                background-image: url(buttons/next.png);
+            }
+            section{
+                text-align: center;
+                color: rgb(134,124,114);
+                font-weight: normal;
+            }
+            section span:nth-child(1):hover{
+                color: white;
+                text-shadow: 0px 0px 20px rgb(175,165,155);
+            }
+            section span:nth-child(2):hover{
+                color: white;
+                text-shadow: 0px 0px 30px rgb(175,165,155);
+            }
+            section span:nth-child(3):hover{
+                color: white;
+                text-shadow: 0px 0px 20px rgb(175,165,155);
+            }
+            section span:nth-child(1){
+                font-size: 32px;
+                position: relative;
+                top: -13px;
+                left: -25px;
+            }
+            section span:nth-child(2){
+                font-size: 64px;
+                line-height: 64px;
+            }
+            section span:nth-child(3){
+                font-size: 32px;
+                position: relative;
+                top: -13px;
+                left: 20px;
+            }
+            aside{
+                padding-top: 20px;
+                text-align: center;
+                color: rgb(134,124,114);
+            }
+            aside progress{
+                width: 100px;
+                height: 2px;
+                position: relative;
+                top: -8px;
+                left: -2px;
+            }
+            aside span:hover{
+                color: white;
+                text-shadow: 0px 0px 10px rgb(175,165,155);
+            }
+        </style>
+    </head>
+    <body>
+        <audio></audio>
+        <main>
+            <header>
+                <h1>传奇</h1>
+                <h2>王菲</h2>
+            </header>
+            <progress value="0"></progress>
+            <footer>
+                <time>0:00</time>
+                <section>
+                    <span class="glyphicon glyphicon-backward" onclick="prev();"></span>
+                    <span class="glyphicon glyphicon-pause" onclick="playPause();"></span>
+                    <span class="glyphicon glyphicon-forward" onclick="next();"></span>
+                </section>
+                <aside>
+                    <span class="glyphicon glyphicon-volume-down" onclick="volumeDown();"></span>
+                    <progress value="0.5"></progress>
+                    <span class="glyphicon glyphicon-volume-up" onclick="volumeUp();"></span>
+                </aside>
+            </footer>
+        </main>
+        <script>
+            var player = document.getElementsByTagName('audio')[0];
+            var main = document.getElementsByTagName('main')[0];
+            var h1 = document.getElementsByTagName('h1')[0];
+            var h2 = document.getElementsByTagName('h2')[0];
+            var progress = document.getElementsByTagName('progress')[0];
+            var volume = document.getElementsByTagName('progress')[1];
+            var time = document.getElementsByTagName('time')[0];
+            
+            player.volume = 0.5;
+            
+            function updateTime(){
+                progress.value = player.currentTime / player.duration;
+                
+                var seconds = Math.ceil(player.currentTime) % 60;
+                var minutes = Math.floor(player.currentTime / 60);
+                if (seconds < 10) seconds = '0' + seconds;
+                
+                time.textContent = minutes + ':' + seconds;
+            }
+            
+            function updateVolume(){
+                volume.value = player.volume;
+            }
+            
+            function playPause(){
+                if(player.paused){
+                    player.play();
+                    document.getElementsByClassName('glyphicon-play')[0].className = 'glyphicon glyphicon-pause';
+                }
+                else{
+                    player.pause();
+                    document.getElementsByClassName('glyphicon-pause')[0].className = 'glyphicon glyphicon-play';
+                }
+            }
+            
+            function volumeDown(){
+                if(player.volume > 0) player.volume -= 0.1;
+            }
+            
+            function volumeUp(){
+                if(player.volume < 1) player.volume += 0.1;
+            }
+            
+            var playList = [
+                {name: '传奇', singer: '王菲', src: '传奇.mp3', pic: 'wf.png' },
+                {name: '知道不知道', singer: '刘若英', src: '知道不知道.mp3', pic: 'lry.jpg' }];
+            
+            var current = 0;
+            
+            function prev(){
+                current--;
+                start();
+            }
+            
+            function next(){
+                current++;
+                start();
+            }
+            
+            function play(item){
+                player.src = item.src;
+                h1.innerHTML = item.name;
+                h2.innerHTML = item.singer;
+                main.style.backgroundImage = 'url(' + item.pic + ')';
+                main.style.animationName = 'slideBg';
+                
+                setTimeout(function(){ main.style.animationName = ''; }, 500);
+                
+                player.play();
+            }
+            
+            function start(){
+                if (current >= playList.length) current = 0;
+                if (current < 0) current = playList.length - 1;
+                var item = playList[current];
+                if(item){
+                    play(item);
+                }
+            }
+
+            player.addEventListener('ended', next);
+            player.addEventListener('timeupdate', updateTime);
+            player.addEventListener('volumechange', updateVolume);
+            
+            start();
+        </script>
+    </body>
+</html>

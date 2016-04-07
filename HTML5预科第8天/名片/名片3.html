@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>我的名片</title>
+    <style>
+        body{
+            background-color:#444;
+            padding-top:50px;
+            
+        }
+        article{
+            width: 500px;
+            height: 300px;
+            padding: 30px 30px 20px 30px;
+            box-sizing: border-box;
+            background-image: linear-gradient(to bottom, rgb(242,172,130), rgb(238,169,126),rgb(234,159,119),rgb(225,140,101));/*#f5b400; */
+            color:white;
+            box-shadow:1px 3px 5px #222;
+            margin:0 auto;
+            transform:rotate(10deg);
+            position:relative;
+            overflow:hidden;
+            z-index: 10;
+        }
+        .pic{
+            width:458px;
+            height:325px;
+            position:absolute;
+            top:0px;
+            right:-300px;
+            opacity: 0.9;
+            /*transform: rotate(7deg);*/
+        }
+        .logo{
+            width: 40%;
+        }
+        h1{
+            font-size:30px;
+        }
+        small{
+            font-size:15px;
+            line-height:25px;
+            display:block;
+            font-weight:normal;
+        }
+        address{
+            font-style:normal;
+            line-height:180%;
+            font-size:15px;
+        }
+        .addr:before{
+            content:'地址：';
+        }
+        .tel:before{
+            content:'手机：';
+        }
+        .qq:before{
+            content:'QQ：';
+        }
+        .email:before{
+            content:'电子邮箱：';
+        }
+        p{
+            margin:0;
+        }
+        .tel{
+            float:left;
+        }
+        .qq{
+            display:inline-block;
+            margin-left:30px;
+        }
+
+        aside{
+            width: 500px;
+            height: 300px;
+            padding: 30px 25px 20px 25px;
+            box-sizing: border-box;
+            background-image:linear-gradient(to bottom, rgb(242,172,130), rgb(238,169,126),rgb(234,159,119),rgb(225,140,101));
+            box-shadow:1px 3px 5px #222;
+            margin:10px auto;
+            transform: rotate(-1deg) translate(30px, 0);
+        }
+        .photo{
+            float:left;
+            margin-top:50px;
+            height:110px;
+            width:110px;
+            border-radius:50%;
+            border:solid 6px white;
+            background-image:url(photo.jpg);
+            background-position:60% 30%;
+            background-size:311px 311px;
+        }
+        aside p{
+            color:white;
+            text-indent:2em;
+            float:right;
+            width:310px;
+            margin-top:65px;
+            line-height: 150%;
+        }
+    </style>
+</head>
+<body>
+    <article>
+        <img class="logo" src="logo.png" />
+        <h1>常伟<small>HTML5讲师</small></h1>
+        <address>
+            <p class="addr">郑州市经开区河南通讯产业园6楼西南四</p>
+            <p class="tel">18638273637</p>
+            <p class="qq">273263743</p>
+            <p class="email">changwei@zhiyou100.com</p>
+        </address>
+        <img class="pic" src="xrk2.jpg" />
+    </article>
+    <aside>
+        <div class="photo"></div>
+        <p>学好一门技术的唯一方法是使用它，在使用它的过程中才能真正学会它。
+        如果能够在使用它的过程中体会到乐趣，就是学习的最佳状态。</p>
+    </aside>
+</body>
+</html>

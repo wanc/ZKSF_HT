@@ -1,0 +1,165 @@
+<html>
+    <head>
+        <title>郑州市 - 天气预报</title>
+        <meta charset="utf-8">
+        <style>
+            html,body{
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                text-shadow: 1px 0px 1px #333;
+                background-image: linear-gradient(to bottom, rgb(13, 104, 188), rgb(114, 173, 224));
+                background-color: rgb(114, 173, 224);
+                background-repeat: no-repeat;
+                text-align: center;
+                color: white;
+            }
+            header{
+                font-size: 19px;
+                line-height: 60px;
+            }
+            main .icon{
+                margin: 40px;
+                background-image: url(days/xue.png);
+                height: 128px;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+            main .tempers{
+                font-size: 32px;
+                font-family: Arial;
+            }
+            main sup{
+                font-size: 19px;
+            }
+            main .weather{
+                font-size: 17px;
+            }
+            main .wind{
+                font-size: 13px;
+                line-height: 200%;
+            }
+            main .current{
+                font-size: 13px;
+            }
+            footer{
+                width: 90%;
+                margin: 60px auto 20px auto;
+                font-size: 13px;
+            }
+            section{
+                width: 33.3333333333333%;
+                float: left;
+                border-right: solid 1px #aaf;
+                box-sizing: border-box;
+            }
+            section:nth-child(3){
+                border: none;
+            }
+            section .icon{
+                height: 60px;
+                margin: 15px auto;
+                background-image: url(days/duoyun.png);
+                background-repeat: no-repeat;
+                background-size: 60px;
+                background-position: center center;
+                opacity: 0.7;
+            }
+        </style>
+        <script src="jquery.js"></script>
+    </head>
+    <body>
+        <header>郑州</header>
+        <main>
+            <div class="icon"></div>
+            <div class="tempers">&nbsp; <span>-13 ~ 2</span><sup>℃</sup></div>
+            <div class="weather">小雪</div>
+            <div class="wind">微风</div>
+            <div class="current">实时温度：13℃，空气指数 135 轻度污染</div>
+        </main>
+        <footer>
+            <section>
+                <div class="week">周二</div>
+                <div class="icon"></div>
+                <div class="temper">13 ~ 5℃</div>
+                <div class="weather">晴</div>
+                <div class="wind">微风</div>
+            </section>
+            <section>
+                <div class="week">周三</div>
+                <div class="icon"></div>
+                <div class="temper">13 ~ 5℃</div>
+                <div class="weather">晴</div>
+                <div class="wind">微风</div>
+            </section>
+            <section>
+                <div class="week">周四</div>
+                <div class="icon"></div>
+                <div class="temper">13 ~ 5℃</div>
+                <div class="weather">晴</div>
+                <div class="wind">微风</div>
+            </section>
+            <div style="clear:left;"></div>
+        </footer>
+        <script>
+            jQuery.getJSON('http://api.map.baidu.com/telematics/v3/weather?location=郑州市&output=json&ak=EGmbw3jQF3ZccEqiv5hxKekm&mcode=com.BaiduWeather&callback=?', function(data){
+                var r = data.results[0];
+                var city = r.currentCity;
+                var pm25 = r.pm25;
+                
+                var datas = r.weather_data;
+                var today = datas[0];
+                var pic = today.dayPictureUrl.substring(today.dayPictureUrl.lastIndexOf('/'));
+                
+                $('header').text(city);
+                $('main .icon').css('background-image', 'url(days' + pic + ')');
+                
+                var tempers = today.temperature.replace('℃', '');
+                $('main .tempers span').text(tempers);
+                
+                $('main .weather').text(today.weather);
+                $('main .wind').text(today.wind);
+                
+                var temper = today.date.substring(today.date.indexOf('：'));
+                temper = temper.replace(')', '');
+                
+              
+                var current = '实时温度' + temper + '，空气指数 ' + pm25 + ' ' + getAPIName(pm25);
+                $('main .current').text(current);
+                
+                var days = $('section');
+                
+                for(var i = 1; i < 4; i++){
+                    var day = days.get(i - 1);
+                    var data = datas[i];
+                    
+                    $('.week', day).text(data.date);
+                    $('.temper', day).text(data.temperature);
+                    $('.wind', day).text(data.wind);
+                    $('.weather', day).text(data.weather);
+                    
+                    var pic = data.dayPictureUrl.substring(data.dayPictureUrl.lastIndexOf('/'));
+                    $('.icon', day).css('background-image', 'url(days' + pic + ')');
+                }
+                
+            });
+            
+            //使用者传入的值           函数返回的值
+            //pm25          ———>     空气污染程度
+            function getAPIName(pm25){
+                var api;
+                
+                if (pm25 <= 50)                     api = '优';
+                if (pm25 >= 51 && pm25 <= 100)      api = '良';
+                if (pm25 >= 101 && pm25 <= 150)     api = '轻微污染';
+                if (pm25 >= 151 && pm25 <= 200)     api = '轻度污染';
+                if (pm25 >= 201 && pm25 <= 300)     api = '中度污染';
+                if (pm25 > 300)                     api = '重度污染';
+                if (pm25 > 500)                     api = '已爆表！';
+                
+                return api;
+            }
+            
+        </script>
+    </body>
+</html>

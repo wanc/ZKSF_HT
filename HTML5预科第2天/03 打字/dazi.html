@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>打字练习</title>
+    <link href="animate.css" rel="stylesheet" />
+    <style>
+        main{
+            border:solid 5px black;
+            border-radius:50%;
+            width:500px;
+            height:500px;
+            margin:50px auto;
+        }
+        div{
+            font-size:350px;
+            text-align:center;
+            line-height:560px;
+        }
+        footer {
+            text-align:center;
+        }
+        .error {
+            color:red;
+        }
+    </style>
+</head>
+<body onkeyup="key(event);">
+    <main>
+        <div id="char"></div>
+    </main>
+    <footer id="result"></footer>
+    <script>
+        var char;
+        var okCount = 0;
+        var errorCount = 0;
+
+        function showChar() {
+            var code = Math.floor(Math.random() * 26);
+            char = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(code);
+
+            document.getElementById("char").innerHTML = char;
+        }
+
+        function showResult() {
+            if (okCount > 0) {
+                var r = 100.00;
+                if (errorCount > 0) {
+                    r = 100.00 * (okCount - errorCount) / okCount;
+                }
+
+                document.getElementById("result").innerHTML = "正确 " + okCount + " 个，错误 " + errorCount + " 个，正确率 " + r.toFixed(2) + "%";
+            }
+        }
+
+        showChar();
+
+        function key(event) {
+            var key = event.key.toUpperCase();
+            var charBox = document.getElementById("char");
+
+            function clearAnimate() {
+                charBox.className = "animated";
+            }
+
+            if (key == char) {
+                okCount = okCount + 1;
+                showChar();
+                charBox.className = "animated zoomIn";
+                
+                setTimeout(clearAnimate, 500);
+            } else {
+                errorCount = errorCount + 1;
+                charBox.className = "animated shake error";
+
+                setTimeout(clearAnimate, 500);
+            }
+
+            showResult();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <title>汤姆猫</title>
+        <meta charset="utf-8">
+        <style>
+            body,img{
+                margin: 0;
+                height: 100%;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body onclick="action(event);">
+        <img id="tom" src="angry/angry_00.jpg">
+        <audio id="player"></audio>
+        <script>
+            var img = document.getElementById('tom');
+            var player = document.getElementById('player');
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            
+            function play(name, total, startAt) {
+                var i = 0;
+                animate();
+                
+                function animate() {
+                    var src = name + '/' + name + '_' + (i < 10 ? + '0' : '') + i + '.jpg';
+                    img.src = src;
+
+                    if (i < total) {
+                        timer = setTimeout(animate, 100);
+                        
+                        if (i == startAt) {
+                            player.src = 'sounds/' + name + '.m4a';
+                            player.play();
+                        }
+                        if (name == 'drink' && i == 10) { // drink 需要2个音频
+                            player.src = 'sounds/pour.m4a';
+                            player.play();
+                        }
+                        if (name == 'knockout' && i == 0) {
+                            player.src = 'sounds/fall.m4a';
+                            player.play();
+                        }
+                        i++;
+                    }
+                }
+            }
+            
+            function action(event){
+                var x = event.pageX * 360 / w;
+                var y = event.pageY * 640 / h;
+                
+                if(x > 140 && x < 225 && y > 400 && y < 450) {
+                    play('angry', 25, 0);
+                }
+                
+                if(x > 119 && x < 245 && y > 465 && y < 565) {
+                    play('stomach', 33, 0);
+                } 
+                
+                if(x > 155 && x < 210 && y > 190 && y < 230) {
+                    play('knockout', 80, 13);
+                }
+                
+                if(x > 137 && x < 235 && y > 250 && y < 280) {
+                    if(x < 185) 
+                        play('eat', 39, 0);
+                    else
+                        play('drink', 80, 30);
+                }
+                
+                if(x > 124 && x < 240 && y > 160 && y < 190) {
+                    play('cymbal', 12, 0);
+                }
+                
+                if(x > 246 && x < 280 && y > 490 && y < 580) {
+                    play('fart', 27, 0);
+                }
+                
+                if(x > 80 && x < 120 && y > 110 && y < 195) {
+                    play('scratch', 55, 15);
+                }
+                
+                if(x > 240 && x <290 && y > 110 && y < 200) {
+                    play('pie', 23, 12);
+                }
+                
+                if(x > 125 && x < 175 && y > 570 && y < 620) {
+                    play('foot_right', 29, 0);
+                }
+                
+                if(x > 180 && x < 230 && y > 570 && y < 620) {
+                    play('foot_left', 29, 0);
+                }
+            }
+        </script>
+    </body>
+</html>

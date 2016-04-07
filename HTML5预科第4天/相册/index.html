@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <title>我的相册</title>
+        <meta charset="utf-8">
+        <script src="js/jquery.js"></script>
+        <script src="libs/fancybox/jquery.fancybox.js"></script>
+        <script src="libs/fancybox/helpers/jquery.fancybox-buttons.js"></script>
+        <script src="libs/fancybox/helpers/jquery.fancybox-thumbs.js"></script>
+        <link rel="stylesheet" href="libs/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="libs/fancybox/helpers/jquery.fancybox-thumbs.css">
+        <link rel="stylesheet" href="libs/fancybox/helpers/jquery.fancybox-buttons.css">
+        <style>
+            body{
+                background-color: #333;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            #xc div{
+                width: 100px;
+                height: 100px;
+                border: solid 5px white;
+                border-bottom: solid 18px white;
+                transition: transform 0.5s;
+            }
+            #xc div:hover{
+                transform: scale(1.5, 1.5) !important;
+                z-index: 100;
+            }
+            #xc div a{
+                display: block;
+                width: 100px;
+                height: 100px;
+                text-indent: -200px;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="xc">
+            <div style="background-image:url(images/thumbs/0.jpg)"><a href="images/0.jpg" rel="group">在大海中冲浪</a></div>
+            <div style="background-image:url(images/thumbs/1.jpg)"><a href="images/1.jpg" rel="group">图片2</a></div>
+            <div style="background-image:url(images/thumbs/2.jpg)"><a href="images/2.jpg" rel="group">图片3</a></div>
+            <div style="background-image:url(images/thumbs/3.jpg)"><a href="images/3.jpg" rel="group">图片4</a></div>
+            <div style="background-image:url(images/thumbs/4.jpg)"><a href="images/4.jpg" rel="group">图片5</a></div>
+            <div style="background-image:url(images/thumbs/5.jpg)"><a href="images/5.jpg" rel="group">图片6</a></div>
+            <div style="background-image:url(images/thumbs/6.jpg)"><a href="images/6.jpg" rel="group">图片7</a></div>
+            <div style="background-image:url(images/thumbs/7.jpg)"><a href="images/7.jpg" rel="group">图片8</a></div>
+            <div style="background-image:url(images/thumbs/8.jpg)"><a href="images/8.jpg" rel="group">图片9</a></div>
+            <div style="background-image:url(images/thumbs/9.jpg)"><a href="images/9.jpg" rel="group">图片10</a></div>
+            <div style="background-image:url(images/thumbs/10.jpg)"><a href="images/10.jpg" rel="group">图片11</a></div>
+            <div style="background-image:url(images/thumbs/11.jpg)"><a href="images/11.jpg" rel="group">图片12</a></div>
+            <div style="background-image:url(images/thumbs/12.jpg)"><a href="images/12.jpg" rel="group">图片13</a></div>
+            <div style="background-image:url(images/thumbs/13.jpg)"><a href="images/13.jpg" rel="group">图片14</a></div>
+            <div style="background-image:url(images/thumbs/14.jpg)"><a href="images/14.jpg" rel="group">图片15</a></div>
+            <div style="background-image:url(images/thumbs/15.jpg)"><a href="images/15.jpg" rel="group">图片16</a></div>
+        </div>
+        <script>
+            function arrange(){
+                var w = $(window).width();
+                var h = $(window).height();
+                var centerX = w / 2;
+                var centerY = h / 2;
+                
+                $('#xc div').each(function(){
+                    var left = Math.random() * centerX  + centerX / 2 - 50;
+                    var top = Math.random() * centerY + centerY / 2 - 60;
+                    var rotate = Math.random() * 80 - 40;
+                    
+                    $(this).css({
+                        'top': top,
+                        'left': left,
+                        'position': 'absolute',
+                        'transform': 'rotate('+ rotate + 'deg)'
+                    });
+                });
+                
+            }
+            
+            arrange();
+            
+            $(window).resize(arrange);
+            
+            $(function(){
+                $('#xc div a').fancybox({
+                    openEffect: 'elastic',
+                    closeEffect: 'elastic',
+                    closeBtn: false,
+                    autoPlay: true,
+                    helpers: {
+                        buttons: {},
+                        title: { type: 'inside' },
+                        thumbs: { alwaysCenter: true }
+                    },
+                    beforeLoad: function(){
+                        this.title = $(this.element).text();
+                    }
+                });
+            })
+            
+        </script>
+    </body>
+</html>
